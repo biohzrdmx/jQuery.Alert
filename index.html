@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Alert</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="jquery.alert.css">
+    <style>
+        body { padding-top: 70px; }
+        .alert-overlay.facebook {
+            background: none;
+        }
+        .alert-overlay.facebook .alert {
+            background: none;
+            border: 10px solid rgba(0, 0, 0, 0.5);
+            padding: 0;
+            margin-top: 120px;
+        }
+        .alert-overlay.facebook .alert .alert-title {
+            border: 1px solid #395998;
+            background: #6A83B4;
+            color: #FFF;
+            font-weight: 700;
+            padding: 5px 10px;
+        }
+        .alert-overlay.facebook .alert .alert-message {
+            border: 1px solid #555555;
+            background: #FFF;
+            border-bottom: none;
+            border-top: none;
+        }
+        .alert-overlay.facebook .alert .alert-buttons {
+            border: 1px solid #555555;
+            border-top: 1px solid #CACACA;
+            background: #F1F1F1;
+        }
+        .alert-overlay.facebook .alert .alert-buttons button {
+            background: #5672A8;
+            color: #FFF;
+            font-weight: 700;
+            border: 1px solid #28467E;
+            box-shadow: inset 0 1px 0 #879AC1;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container"><!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">jQuery Alert</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <!-- <li class="active"><a href="#">Overview</a></li> -->
+            </ul>
+            </div><!-- /.navbar-collapse --></div>
+    </nav>
+    <div class="container">
+        <h2>Introduction</h2>
+        <p>Say no to vanilla JS alerts. They're fugly on some browsers and will make your users think there are errors on your page.</p>
+        <p>With this plugin you'll be able to create rich, completely customizable alerts in seconds.</p>
+
+        <h3>Credits</h3>
+        <p><strong>Lead coder:</strong> biohzrdmx <a href="http://github.com/biohzrdmx">&lt;github.com/biohzrdmx&gt;</a></p>
+
+        <h3>License</h3>
+        <p>The MIT License (MIT)</p>
+        <p>Copyright (c) 2013 biohzrdmx</p>
+        <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+        <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+        <h2>Basic usage</h2>
+        <p>Remember the old <code>alert()</code> function? Well, just add jQuery to the mix and you're set.</p>
+        <pre><code>$('button.example-1').on('click', function(e) {
+  $.alert('Hello! &lt;strong&gt;I'm an alert!&lt;/strong&gt;');
+});</code></pre>
+        <p>
+            <button class="btn btn-primary example-1">Show alert</button>
+        </p>
+        <p>Yep, it even displays HTML markup.</p>
+
+        <h3>Custom buttons? No problem!</h3>
+        <pre><code>$.alert('What the? I have two buttons!', {
+  buttons: [
+    {
+      text: 'Click me',
+      action: function() {
+        $.alert.close();
+      }
+    },
+    {
+      text: 'No! Click me!!',
+      action: function() {
+        $.alert.close();
+      }
+    }
+  ]
+});</code></pre>
+        <p>
+            <button class="btn btn-primary example-2">Show alert</button>
+        </p>
+
+        <h3>Callbacks? Ja!</h3>
+        <pre><code>$('button.example-3').on('click', function(e) {
+  $.alert('Look at the area below the button that you just clicked', {
+    onOpen: function() {
+      $('#callback').text('Alert opened!!');
+    },
+    onClose: function() {
+      $('#callback').text('Alert closed!!');
+    }
+  });
+});</code></pre>
+        <p>
+            <button class="btn btn-primary example-3">Show alert</button>
+        </p>
+        <div class="alert alert-info" id="callback">Nothing interesting yet...</div>
+
+        <h3>Styling</h3>
+        <p>These alerts are fully customizable, from the markup to the CSS!</p>
+        <pre><code>$('button.example-4').on('click', function(e) {
+  $.alert('Look at the area below the button that you just clicked', {
+    themeClass: 'facebook',
+    markup: '&lt;div class=&quot;alert-overlay&quot;&gt;&lt;div class=&quot;alert&quot;&gt;&lt;div class=&quot;alert-title&quot;&gt;A Facebook-style alert&lt;/div&gt;&lt;div class=&quot;alert-message&quot;&gt;{message}&lt;/div&gt;&lt;div class=&quot;alert-buttons&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;',
+  });
+});</code></pre>
+        <pre><code>.alert-overlay.facebook {
+  background: none;
+}
+.alert-overlay.facebook .alert {
+  background: none;
+  border: 10px solid rgba(0, 0, 0, 0.5);
+  padding: 0;
+  margin-top: 120px;
+}
+.alert-overlay.facebook .alert .alert-title {
+  border: 1px solid #395998;
+  background: #6A83B4;
+  color: #FFF;
+  font-weight: 700;
+  padding: 5px 10px;
+}
+.alert-overlay.facebook .alert .alert-message {
+  border: 1px solid #555555;
+  background: #FFF;
+  border-bottom: none;
+  border-top: none;
+}
+.alert-overlay.facebook .alert .alert-buttons {
+  border: 1px solid #555555;
+  border-top: 1px solid #CACACA;
+  background: #F1F1F1;
+}
+.alert-overlay.facebook .alert .alert-buttons button {
+  background: #5672A8;
+  color: #FFF;
+  font-weight: 700;
+  border: 1px solid #28467E;
+  box-shadow: inset 0 1px 0 #879AC1;
+}</code></pre>
+        <p>
+            <button class="btn btn-primary example-4">Show alert</button>
+        </p>
+
+        <h2>Troubleshooting</h2>
+        <p>This plugin works on IE7+, Firefox and Chrome. Opera should do too, but I don't really care.</p>
+        <p>Responsiveness can be achieved by using media queries (as the default style does to adjust maximum width) but you may need a polyfill for older browsers that do not support media queries.</p>
+        <p>Finally, a <strong>minor caveat</strong>: These alerts are <i>NOT</i> synchronous. That basically means that you should move your <code>on accept/reject</code> logic to the button actions as <code>$.alert()</code> will return immediately.</p>
+        <hr>
+        <p class="text-center text-muted"><small>biohzrdmx</small></p>
+    </div>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="jquery.alert.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('button.example-1').on('click', function(e) {
+                $.alert('Hello! <strong>I\'m an alert!</strong>');
+            });
+            $('button.example-2').on('click', function(e) {
+                $.alert('What the? I have two buttons!', {
+                    buttons: [
+                        {
+                            text: 'Click me',
+                            action: function() {
+                                $.alert.close();
+                            }
+                        },
+                        {
+                            text: 'No! Click me!!',
+                            action: function() {
+                                $.alert.close();
+                            }
+                        }
+                    ]
+                });
+            });
+            $('button.example-3').on('click', function(e) {
+                $.alert('Look at the area below the button that you just clicked', {
+                    onOpen: function() {
+                        $('#callback').text('Alert opened!!');
+                    },
+                    onClose: function() {
+                        $('#callback').text('Alert closed!!');
+                    }
+                });
+            });
+            $('button.example-4').on('click', function(e) {
+                $.alert('Look at the area below the button that you just clicked', {
+                    themeClass: 'facebook',
+                    markup: '<div class="alert-overlay"><div class="alert"><div class="alert-title">A Facebook-style alert</div><div class="alert-message">{message}</div><div class="alert-buttons"></div></div></div>'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
