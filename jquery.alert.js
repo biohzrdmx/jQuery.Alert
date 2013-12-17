@@ -24,12 +24,14 @@
 		//
 		var buttonContainer = alert.find('.alert-buttons');
 		buttonContainer.empty();
-		for (var i = 0; i < opts.buttons.length; i++) {
-			var button = $('<button></button>');
-			button.text( opts.buttons[i].text || 'Close' );
-			button.on('click', opts.buttons[i].action || $.noop);
+		$.each(opts.buttons, function(index, val) {
+			var button = $(opts.buttonMarkup);
+			var key = opts.buttons[index].key || index;
+			button.addClass('button-' + key);
+			button.text( opts.buttons[index].text || 'Close' );
+			button.on('click', opts.buttons[index].action || $.noop);
 			buttonContainer.append(button);
-		};
+		});
 		//
 		var dialog = alert.find('.alert');
 		alert.hide();
@@ -45,7 +47,7 @@
 		var detachIt = function() {
 			alert.detach();
 			opts.onClose.call();
-		}
+		};
 		if (opts) {
 			opts.fnHide(dialog, function() {
 				alert.fadeOut(detachIt);
@@ -57,6 +59,7 @@
 	$.alert.defaults = {
 		container: 'body',
 		markup: '<div class="alert-overlay"><div class="alert"><div class="alert-message">{message}</div><div class="alert-buttons"></div></div></div>',
+		buttonMarkup: '<button></button>',
 		themeClass: '',
 		onlyOne: true,
 		buttons: [
