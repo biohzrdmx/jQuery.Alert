@@ -6,7 +6,7 @@ With this plugin you'll be able to create rich, completely customizable alerts i
 
 ###Credits###
 
-**Lead coder:** biohzrdmx [<github.com/biohzrdmx>](http://github.com/biohzrdmx)
+**Lead coder:** biohzrdmx [&lt;github.com/biohzrdmx&gt;](http://github.com/biohzrdmx)
 
 ###License###
 
