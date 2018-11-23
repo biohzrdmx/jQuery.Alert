@@ -22,7 +22,7 @@ Remember the old `alert()` function? Well, just add jQuery to the mix and you're
 
 ```javascript
 $('button.example-1').on('click', function(e) {
-  $.alert('Hello! <strong>I'm an alert!</strong>');
+  $.alert("Hello! <strong>I'm an alert!</strong>");
 });
 ```
 
