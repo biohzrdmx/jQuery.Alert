@@ -40,7 +40,7 @@ To choose between them, just add a `theme` key on your `options` object and set 
 
 ```javascript
 $.alert("Hello! <strong>I'm an alert!</strong>", {
-	theme: 'theme-dark'
+  theme: 'theme-dark'
 });
 ```
 
@@ -48,7 +48,7 @@ To change the theme globally, use the `$.extend` method on the `$.alert.defaults
 
 ```javascript
 $.extend(true, $.alert.defaults, {
-	theme: 'theme-dark'
+  theme: 'theme-dark'
 });
 ```
 
@@ -58,9 +58,9 @@ For example, if you like Bootstrap buttons, you may use them this way:
 
 ```javascript
 $.extend(true, $.alert.defaults, {
-	templates: {
-		button: '<a href="#" class="btn btn-primary"></a>'
-	}
+  templates: {
+    button: '<a href="#" class="btn btn-primary"></a>'
+  }
 });
 ```
 
@@ -72,10 +72,10 @@ Changing the default button is very simple. In this case, we will pass an option
 
 ```javascript
 $.alert("Hi! this is an awesome alert.", {
-	buttons: {
-		close: 'Cancel',
-		retry: 'Try again'
-	}
+  buttons: {
+    close: 'Cancel',
+    retry: 'Try again'
+  }
 });
 ```
 
@@ -101,16 +101,16 @@ You may for example, change the class of an specific button:
 
 ```javascript
 $.alert("Hi! this is an awesome alert.", {
-	callbacks: {
-		createButton: function(button, text, name) {
-			switch (name) {
-				case 'close':
-					button.removeClass('btn-primary').addClass('btn-link');
-				break;
-			}
-			button.text(text);
-		}
-	}
+  callbacks: {
+    createButton: function(button, text, name) {
+      switch (name) {
+        case 'close':
+          button.removeClass('btn-primary').addClass('btn-link');
+        break;
+      }
+      button.text(text);
+    }
+  }
 });
 ```
 
@@ -124,12 +124,12 @@ The callback function receives a single argument, the jQuery-wrapped button elem
 
 ```javascript
 $.alert("Hi! this is an awesome alert.", {
-	callbacks: {
-		buttonRetry: function(button) {
-			console.log("You clicked on 'Try again'");
-			$.alert.api.close();
-		}
-	}
+  callbacks: {
+    buttonRetry: function(button) {
+      console.log("You clicked on 'Try again'");
+      $.alert.api.close();
+    }
+  }
 });
 ```
 
@@ -143,21 +143,21 @@ Say you may want to show the alert and change something once it has been shown, 
 
 ```javascript
 $.alert("Hi! this is an awesome alert, wait 3 seconds to try again.", {
-	callbacks: {
-		createButton: function(button, text, name) {
-			switch (name) {
-				case 'retry':
-					button.addClass('disabled');
-				break;
-			}
-			button.text(text);
-		},
-		onOpen: function(element) {
-			setTimeout(function() {
-				element.find('.alert-buttons .btn-primary').removeClass('disabled');
-			}, 3000);
-		}
-	}
+  callbacks: {
+    createButton: function(button, text, name) {
+      switch (name) {
+        case 'retry':
+          button.addClass('disabled');
+        break;
+      }
+      button.text(text);
+    },
+    onOpen: function(element) {
+      setTimeout(function() {
+        element.find('.alert-buttons .btn-primary').removeClass('disabled');
+      }, 3000);
+    }
+  }
 });
 ```
 
@@ -169,11 +169,11 @@ There's also an equivalent callback for the close event.
 
 ```javascript
 $.alert("Hi! this is an awesome alert.", {
-	callbacks: {
-		onClose: function(element) {
-			console.log('Alert has been closed');
-		}
-	}
+  callbacks: {
+    onClose: function(element) {
+      console.log('Alert has been closed');
+    }
+  }
 });
 ```
 
@@ -183,19 +183,19 @@ This new version supports keyboard events, so if you want to do something with i
 
 ```javascript
 $.alert("Hi! this is an awesome alert.", {
-	callbacks: {
-		onKey: function(key) {
-			switch (key) {
-				case 'Enter':
-					$.alert.api.button('retry');
-				break;
-				case 'Escape':
-				case ' ':
-					$.alert.api.button('close');
-				break;
-			}
-		}
-	}
+  callbacks: {
+    onKey: function(key) {
+      switch (key) {
+        case 'Enter':
+          $.alert.api.button('retry');
+        break;
+        case 'Escape':
+        case ' ':
+          $.alert.api.button('close');
+        break;
+      }
+    }
+  }
 });
 ```
 
@@ -241,42 +241,42 @@ The default implementation uses `$.fn.animate` to present the overlay and alert 
 
 ```javascript
 $.extend(true, $.alert.defaults, {
-	animations: {
-		overlayIn: function(element) {
-			element.css('opacity', 0).show().velocity('transition.fadeIn', { delay: 200, duration: 350 });
-		},
-		overlayOut: function(element) {
-			element.velocity('transition.fadeOut', {
-				delay: 200,
-				duration: 350,
-				complete: function() {
-					element.hide();
-				}
-			});
-		},
-		boxIn: function(element) {
-			element.css('opacity', 0).show().velocity('transition.flipYIn', {
-				delay: 200,
-				duration: 350,
-				complete: function() {
-					var container = element.closest('.jquery-alert'),
-						options = container.data('options');
-					options.callbacks.onOpen(element);
-				}
-			});
-		},
-		boxOut: function(element) {
-			element.velocity('transition.slideLeftOut', {
-				duration: 350,
-				complete: function() {
-					var container = element.closest('.jquery-alert'),
-						options = container.data('options');
-					element.hide();
-					options.callbacks.onClose(element);
-				}
-			});
-		}
-	}
+  animations: {
+    overlayIn: function(element) {
+      element.css('opacity', 0).show().velocity('transition.fadeIn', { delay: 200, duration: 350 });
+    },
+    overlayOut: function(element) {
+      element.velocity('transition.fadeOut', {
+        delay: 200,
+        duration: 350,
+        complete: function() {
+          element.hide();
+        }
+      });
+    },
+    boxIn: function(element) {
+      element.css('opacity', 0).show().velocity('transition.flipYIn', {
+        delay: 200,
+        duration: 350,
+        complete: function() {
+          var container = element.closest('.jquery-alert'),
+            options = container.data('options');
+          options.callbacks.onOpen(element);
+        }
+      });
+    },
+    boxOut: function(element) {
+      element.velocity('transition.slideLeftOut', {
+        duration: 350,
+        complete: function() {
+          var container = element.closest('.jquery-alert'),
+            options = container.data('options');
+          element.hide();
+          options.callbacks.onClose(element);
+        }
+      });
+    }
+  }
 });
 ```
 
