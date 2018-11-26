@@ -1,14 +1,22 @@
-(function($) {
+/**
+ * jQuery.Alert
+ * @version   2.0
+ * @author    biohzrdmx <github.com/biohzrdmx>
+ * @requires  jQuery 1.8+
+ * @license   MIT
+ * @copyright Copyright © 2018 biohzrdmx. All rights reserved.
+ */
+;(function($) {
 	if (typeof $.easing.easeInOutQuad !== 'function' ) {
 		$.easing.easeInOutQuad = function (x, t, b, c, d) { if ((t/=d/2) < 1) return c/2*t*t + b; return -c/2 * ((--t)*(t-2) - 1) + b; };
 	}
 	$.alert = function(message, options) {
-		var opts = $.extend(true, {}, $.alert.defaults, options || {});
-		$.alert.api.show(message, opts);
+		$.alert.api.show(message, options);
 	};
 	$.alert.api = {
 		show: function(message, options) {
-			var parent = $(options.parent);
+			var options = $.extend(true, {}, $.alert.defaults, options || {}),
+				parent = $(options.parent);
 				container = parent.find('.jquery-alert'),
 				alertOverlay = container.find('.alert-overlay'),
 				alertBox = container.find('.alert-box');
@@ -24,35 +32,38 @@
 					options.callbacks.onKey(e.key);
 				});
 			}
-			container.attr('class', 'jquery-alert ' + options.theme);
-			var alertMessage = alertBox.find('.alert-message'),
-				alertButtons = alertBox.find('.alert-buttons');
-			options.callbacks.createMessage(alertMessage, message);
-			if (options.buttons) {
-				alertButtons.empty();
-				for (var name in options.buttons) {
-					if (! options.buttons.hasOwnProperty(name) ) continue;
-					var button = $(options.templates.button),
-						label = options.buttons[name];
-					options.callbacks.createButton(button, label, name);
-					button.data('name', name);
-					button.on('click', function(e) {
-						e.preventDefault();
-						var el = $(this),
-							name = el.data('name');
-						name = name[0].toUpperCase() + name.slice(1);
-						var fnName = 'button' + name;
-						var fnCallback = options.callbacks[fnName] || options.callbacks.onButton;
-						fnCallback(el);
-					});
-					alertButtons.append(button);
-					options.buttons[name] = button;
+			if (! container.hasClass('is-open') ) {
+				container.attr('class', 'jquery-alert ' + options.theme);
+				var alertMessage = alertBox.find('.alert-message'),
+					alertButtons = alertBox.find('.alert-buttons');
+				options.callbacks.createMessage(alertMessage, message);
+				if (options.buttons) {
+					alertButtons.empty();
+					for (var name in options.buttons) {
+						if (! options.buttons.hasOwnProperty(name) ) continue;
+						var button = $(options.templates.button),
+							label = options.buttons[name];
+						options.callbacks.createButton(button, label, name);
+						button.data('name', name);
+						button.on('click', function(e) {
+							e.preventDefault();
+							var el = $(this),
+								name = el.data('name');
+							name = name[0].toUpperCase() + name.slice(1);
+							var fnName = 'button' + name;
+							var fnCallback = options.callbacks[fnName] || options.callbacks.onButton;
+							fnCallback(el);
+						});
+						alertButtons.append(button);
+						options.buttons[name] = button;
+					}
 				}
+				container.data('options', options);
+				options.animations.overlayIn(alertOverlay);
+				options.animations.boxIn(alertBox);
+				container.focus();
+				container.addClass('is-open');
 			}
-			container.data('options', options);
-			options.animations.overlayIn(alertOverlay);
-			options.animations.boxIn(alertBox);
-			container.focus();
 		},
 		close: function() {
 			var container = $('.jquery-alert'),
@@ -61,6 +72,7 @@
 				alertBox = container.find('.alert-box');
 			options.animations.boxOut(alertBox);
 			options.animations.overlayOut(alertOverlay);
+			container.removeClass('is-open');
 		},
 		button: function(name) {
 			var container = $('.jquery-alert'),
@@ -77,7 +89,7 @@
 	};
 	$.alert.defaults = {
 		parent: 'body',
-		buttons: [{ close: 'Close' }],
+		buttons: { close: 'Close' },
 		theme: 'theme-light',
 		templates: {
 			button: '<a href="#" class="button"></a>',
@@ -99,7 +111,7 @@
 					complete: function() {
 						var container = $('.jquery-alert'),
 							options = container.data('options');
-						options.callbacks.onOpen();
+						options.callbacks.onOpen(element);
 					}
 				});
 			},
@@ -111,7 +123,7 @@
 						var container = $('.jquery-alert'),
 							options = container.data('options');
 						$(this).hide();
-						options.callbacks.onClose();
+						options.callbacks.onClose(element);
 					}
 				});
 			}
