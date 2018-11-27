@@ -61,8 +61,8 @@
 				container.data('options', options);
 				options.animations.overlayIn(alertOverlay);
 				options.animations.boxIn(alertBox);
-				container.focus();
 				container.addClass('is-open');
+				container.focus();
 			}
 		},
 		close: function() {
@@ -72,7 +72,7 @@
 				alertBox = container.find('.alert-box');
 			options.animations.boxOut(alertBox);
 			options.animations.overlayOut(alertOverlay);
-			container.removeClass('is-open');
+			container.delay(350).removeClass('is-open');
 		},
 		button: function(name) {
 			var container = $('.jquery-alert'),
