@@ -5,6 +5,8 @@ Say no to vanilla JS alerts. They're fugly on some browsers and will make your u
 
 With this plugin you'll be able to create rich, completely customizable alerts in seconds.
 
+[Live demo and documentation](http://biohzrdmx.github.io/jQuery.Alert/)
+
 ## Installing
 
 Just download `jquery.alert.js` and `jquery.alert.css` then add them to your HTML file:
