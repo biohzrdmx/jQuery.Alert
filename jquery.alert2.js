@@ -72,7 +72,9 @@
 				alertBox = container.find('.alert-box');
 			options.animations.boxOut(alertBox);
 			options.animations.overlayOut(alertOverlay);
-			container.delay(350).removeClass('is-open');
+			setTimeout(function() {
+				container.removeClass('is-open');
+			}, 350);
 		},
 		button: function(name) {
 			var container = $('.jquery-alert'),
