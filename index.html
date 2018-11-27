@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<title>jQuery.Alert 2</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/monokai-sublime.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700">
+	<link rel="stylesheet" href="jquery.alert2.css">
+	<style>
+		body {
+			background: #333333;
+			color: #FFFFFF;
+			display: flex;
+			min-height: 100vh;
+			flex-direction: column;
+			font-family: 'Roboto', sans-serif;
+		}
+		header {
+			background: #282828;
+			color: #FFFFFF;
+		}
+		header .logo {
+			font-size: 2rem;
+			font-weight: 300;
+			margin: 0;
+		}
+		footer {
+			background: #282828;
+			color: #FFFFFF;
+		}
+		section {
+			flex: 1 0 0;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			font-weight: 300;
+		}
+		.tagline {
+			font-size: 1.25rem;
+			font-weight: 300;
+			font-style: italic;
+			margin-bottom: 5px;
+		}
+		.js-thumb, .js-preview {
+			margin-bottom: 15px;
+		}
+		.demo-wrapper {
+			background: #23241F;
+			border-radius: 3px;
+			padding: 10px;
+			margin-bottom: 15px;
+		}
+		.demo-wrapper > *:last-child {
+			margin-bottom: 0;
+		}
+		a {
+			color: #26C6DA;
+		}
+		a:hover {
+			color: #00ACC1;
+			text-decoration: none;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="container p-3">
+			<h1 class="logo">jQuery.Alert 2</h1>
+		</div>
+	</header>
+	<section>
+		<div class="container p-3">
+			<p class="tagline">Say no to vanilla JS alerts.</p>
+			<p>They're fugly on some browsers and will make your users think there are errors on your page. With this plugin you'll be able to create rich, completely customizable alerts in seconds.</p>
+			<p><a href="https://github.com/biohzrdmx/jQuery.Alert" class="btn btn-info"><i class="fa fa-github"></i> View on GitHub</a></p>
+			<h2 id="live-demo">Live demo</h2>
+			<div class="demo-wrapper">
+				<p><a href="#" class="btn btn-success js-show-alert">Show alert</a></p>
+				<p class="js-result">Click 'Show alert'</p>
+			</div>
+			<!--  -->
+			<h2 id="installing">Installing</h2>
+			<p>Just download <code>jquery.alert.js</code> and <code>jquery.alert.css</code> then add them to your HTML file:</p>
+			<pre><code class="language-html">&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.hoverplay.min.js&quot;&gt;&lt;/script&gt;
+			&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/jquery.hoverplay.css&quot;&gt;</code></pre>
+			<p>You may instead use the minified version if you like.</p>
+			<h2 id="basic-usage">Basic usage</h2>
+			<p>Remember the old <code>alert()</code> function? Well, just add jQuery to the mix and you&#39;re set.</p>
+			<pre><code class="language-javascript">$.alert(&quot;Hello! &lt;strong&gt;I&#39;m an alert!&lt;/strong&gt;&quot;);</code></pre>
+			<p>Yep, it even displays HTML markup.</p>
+			<h2 id="advanced-topics">Advanced topics</h2>
+			<p>jQuery.Alert 2 is even more customizable than the original version.</p>
+			<p>You can pass an <code>options</code> object as the second argument <code>$.alert(&#39;Hello&#39;, options)</code> or extend the <code>$.alert.defaults</code> object to make global modifications.</p>
+			<h3 id="theme">Theme</h3>
+			<p>This version includes two basic themes, a light one and a dark one.</p>
+			<p>To choose between them, just add a <code>theme</code> key on your <code>options</code> object and set it to either <code>theme-light</code> or <code>theme-dark</code>, for example:</p>
+			<pre><code class="language-javascript">$.alert(&quot;Hello! &lt;strong&gt;I&#39;m an alert!&lt;/strong&gt;&quot;, {
+  theme: &#39;theme-dark&#39;
+});</code></pre>
+			<p>To change the theme globally, use the <code>$.extend</code> method on the <code>$.alert.defaults</code> object:</p>
+			<pre><code class="language-javascript">$.extend(true, $.alert.defaults, {
+  theme: &#39;theme-dark&#39;
+});</code></pre>
+			<h3 id="changing-the-button-template">Changing the button template</h3>
+			<p>For example, if you like Bootstrap buttons, you may use them this way:</p>
+			<pre><code class="language-javascript">$.extend(true, $.alert.defaults, {
+  templates: {
+    button: &#39;&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot;&gt;&lt;/a&gt;&#39;
+  }
+});</code></pre>
+			<p>By extending the <code>$.alert.defaults</code> object, all alerts will use the new template.</p>
+			<h3 id="buttons">Buttons</h3>
+			<p>Changing the default button is very simple. In this case, we will pass an options object to change the button only for that call.</p>
+			<pre><code class="language-javascript">$.alert(&quot;Hi! this is an awesome alert.&quot;, {
+  buttons: {
+    close: &#39;Cancel&#39;,
+    retry: &#39;Try again&#39;
+  }
+});</code></pre>
+			<p>This can be useful for localization.</p>
+			<p>As you can see, buttons are named with a camel-cased name (<code>code</code>, <code>retry</code>) and the label is just an string (<code>&#39;Cancel&#39;</code>, <code>&#39;Try again&#39;</code>). Button names are important because of the callback mechanism.</p>
+			<h3 id="callbacks">Callbacks</h3>
+			<p>You may also get notified when something happens to your alert, the supported events are:</p>
+			<ul>
+				<li><code>createButton</code> - Allows you to manipulate a button right after it has been created.</li>
+				<li><code>button{Name}</code> - Allows you to receive a notification when a button has been clicked.</li>
+				<li><code>onOpen</code> - The alert has just been shown to the user.</li>
+				<li><code>onClose</code> - The alert has just been closed.</li>
+				<li><code>onKey</code> - Allows you to process keyboard input.</li>
+			</ul>
+			<h4 id="createbutton">createButton</h4>
+			<p>This receives three arguments <code>button</code>, <code>text</code> and <code>name</code>, where <code>button</code> is the jQuery-wrapped button element, <code>text</code> and <code>name</code> are the string representations of the button text and name.</p>
+			<p>You may for example, change the class of an specific button:</p>
+			<pre><code class="language-javascript">$.alert(&quot;Hi! this is an awesome alert.&quot;, {
+  callbacks: {
+    createButton: function(button, text, name) {
+      switch (name) {
+        case &#39;close&#39;:
+          button.removeClass(&#39;btn-primary&#39;).addClass(&#39;btn-link&#39;);
+        break;
+      }
+      button.text(text);
+    }
+  }
+});</code></pre>
+			<p>It is very important to note that if you&#39;re overriding this, you must manually set the button text.</p>
+			<h4 id="button-name-">button{Name}</h4>
+			<p>To receive events on button pressed you must add as many <code>button{Name}</code> callbacks as you need, replacing <code>{Name}</code> with the proper-cased name of each button, for example if your button was defined as <code>retry: &#39;Try again&#39;</code> you should create a <code>buttonRetry</code> callback.</p>
+			<p>The callback function receives a single argument, the jQuery-wrapped button element as <code>button</code>:</p>
+			<pre><code class="language-javascript">$.alert(&quot;Hi! this is an awesome alert.&quot;, {
+  callbacks: {
+    buttonRetry: function(button) {
+      console.log(&quot;You clicked on &#39;Try again&#39;&quot;);
+      $.alert.api.close();
+    }
+  }
+});</code></pre>
+			<p>As you can see you can easily dismiss an alert programatically with the <code>$.alert.api.close()</code> function (more on API functions below).</p>
+			<p>If you don&#39;t add a callback for an specific button it will be handled by the default callback, just closing the alert box.</p>
+			<h4 id="onopen">onOpen</h4>
+			<p>Say you may want to show the alert and change something once it has been shown, you may do it with the <code>onOpen</code> callback:</p>
+			<pre><code class="language-javascript">$.alert(&quot;Hi! this is an awesome alert, wait 3 seconds to try again.&quot;, {
+  callbacks: {
+    createButton: function(button, text, name) {
+      switch (name) {
+        case &#39;retry&#39;:
+          button.addClass(&#39;disabled&#39;);
+        break;
+      }
+      button.text(text);
+    },
+    onOpen: function(element) {
+      setTimeout(function() {
+        element.find(&#39;.alert-buttons .btn-primary&#39;).removeClass(&#39;disabled&#39;);
+      }, 3000);
+    }
+  }
+});</code></pre>
+			<p>For this example, we disable the &#39;Try again&#39; button with the <code>createButton</code> callback and once we receive the <code>onOpen</code> one, we wait for 3 seconds, then enable it again.</p>
+			<h4 id="onclose">onClose</h4>
+			<p>There&#39;s also an equivalent callback for the close event.</p>
+			<pre><code class="language-javascript">$.alert(&quot;Hi! this is an awesome alert.&quot;, {
+  callbacks: {
+    onClose: function(element) {
+      console.log(&#39;Alert has been closed&#39;);
+    }
+  }
+});</code></pre>
+			<h4 id="onkey">onKey</h4>
+			<p>This new version supports keyboard events, so if you want to do something with it, this is the callback. The function gets a single argument, the key name as <code>key</code>:</p>
+			<pre><code class="language-javascript">$.alert(&quot;Hi! this is an awesome alert.&quot;, {
+  callbacks: {
+    onKey: function(key) {
+      switch (key) {
+        case &#39;Enter&#39;:
+          $.alert.api.button(&#39;retry&#39;);
+        break;
+        case &#39;Escape&#39;:
+        case &#39; &#39;:
+          $.alert.api.button(&#39;close&#39;);
+        break;
+      }
+    }
+  }
+});</code></pre>
+			<p>In this example, the Escape and Space keys dismiss the alert (by calling on the <code>$.alert.api.button</code> to simulate a click on the <code>close</code> button) while the Enter key uses the <code>retry</code> button.</p>
+			<p>If you don&#39;t process this event, the default will dismiss the alert for the three keys (Escape, Enter and Space).</p>
+			<h3 id="api">API</h3>
+			<p>jQuery.Alert 2 exposes some API functions through the <code>$.alert.api</code> object, and you may use them to interact with the plugin. These functions are:</p>
+			<ul>
+				<li><code>show</code> - Open the alert</li>
+				<li><code>close</code> - Close the alert</li>
+				<li><code>button</code> - Simulate a click on a given button</li>
+			</ul>
+			<h4 id="show">show</h4>
+			<p>This is called when you use the short-form <code>$.alert()</code> and as such, receives two arguments, <code>message</code> and <code>options</code>.</p>
+			<pre><code class="language-javascript">$.alert.api.show(&quot;Hello! &lt;strong&gt;I&#39;m an alert!&lt;/strong&gt;&quot;);</code></pre>
+			<h4 id="close">close</h4>
+			<p>This just closes the alert, receives no arguments.</p>
+			<pre><code class="language-javascript">$.alert.api.close();</code></pre>
+			<h4 id="button">button</h4>
+			<p>Trigger a click for the specified button, receives the button name:</p>
+			<pre><code class="language-javascript">$.alert.api.button(&#39;close&#39;);</code></pre>
+			<h3 id="animations">Animations</h3>
+			<p>The default implementation uses <code>$.fn.animate</code> to present the overlay and alert box, but you may override it to use your own methods or even something like Velocity.js. For this to work, you&#39;d have to override the <code>animations</code> object on <code>$.alert.defaults</code> (although you may do so with <code>options</code> too):</p>
+			<pre><code class="language-javascript">$.extend(true, $.alert.defaults, {
+  animations: {
+    overlayIn: function(element) {
+      element.css(&#39;opacity&#39;, 0).show().velocity(&#39;transition.fadeIn&#39;, { delay: 200, duration: 350 });
+    },
+    overlayOut: function(element) {
+      element.velocity(&#39;transition.fadeOut&#39;, {
+        delay: 200,
+        duration: 350,
+        complete: function() {
+          element.hide();
+        }
+      });
+    },
+    boxIn: function(element) {
+      element.css(&#39;opacity&#39;, 0).show().velocity(&#39;transition.flipYIn&#39;, {
+        delay: 200,
+        duration: 350,
+        complete: function() {
+          var container = element.closest(&#39;.jquery-alert&#39;),
+            options = container.data(&#39;options&#39;);
+          options.callbacks.onOpen(element);
+        }
+      });
+    },
+    boxOut: function(element) {
+      element.velocity(&#39;transition.slideLeftOut&#39;, {
+        duration: 350,
+        complete: function() {
+          var container = element.closest(&#39;.jquery-alert&#39;),
+            options = container.data(&#39;options&#39;);
+          element.hide();
+          options.callbacks.onClose(element);
+        }
+      });
+    }
+  }
+});</code></pre>
+			<p>There are four animations: <code>overlayIn</code>, <code>overlayOut</code>, <code>boxIn</code> and <code>boxOut</code>. The first two take care of the overlay, while the later two animate the alert box.</p>
+			<p>Please note how the box-related ones <em>MUST</em> invoke a callback (<code>onOpen</code> or on <code>onClose</code>).</p>
+			<h3 id="styling">Styling</h3>
+			<p>Please refer to <code>jquery.alert.less</code> for the LESS source or <code>jquery.alert.css</code> for the generated CSS.</p>
+			<p>There you will find the classes that must be overriden to change the appearance of the overlay and alert box.</p>
+			<p>You may specify any value for the <code>theme</code> option, so that it matches your custom theme name.</p>
+			<h2 id="requirements">Requirements</h2>
+			<ul>
+				<li>jQuery 1.8+</li>
+				<li>A recent/decent web browser (Firefox, Chrome or Opera suggested; <strong>IE/Edge NOT TESTED/DON&#39;T CARE</strong>)</li>
+			</ul>
+			<h2 id="licensing">Licensing</h2>
+			<p>MIT Licensed</p>
+			<h2 id="contributing">Contributing</h2>
+			<p>Fork the repo, add an interesting feature or fix a bug and send a pull request.</p>
+			<h2 id="troubleshooting">Troubleshooting</h2>
+			<p>Open an issue and provide a clear description of the error, how to reproduce it and your test environment specs (browser, jQuery version, etc.)</p>
+			<h2 id="credits">Credits</h2>
+			<p>Lead coder: biohzrdmx (<a href="https://github.com/biohzrdmx">github.com/biohzrdmx</a>)</p>
+			<!--  -->
+		</div>
+	</section>
+	<footer>
+		<div class="container p-3 text-center">
+			<small>&copy; 2018 biohzrdmx. All rights reserved.</small>
+		</div>
+	</footer>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.ui.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+	<script type="text/javascript" src="jquery.alert2.min.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			//
+			$.extend(true, $.alert.defaults, {
+				templates: {
+					button: '<a href="#" class="btn btn-primary"></a>'
+				},
+				animations: {
+					overlayIn: function(element) {
+						element.css('opacity', 0).show().velocity('transition.fadeIn', { delay: 200, duration: 350 });
+					},
+					overlayOut: function(element) {
+						element.velocity('transition.fadeOut', {
+							delay: 200,
+							duration: 350,
+							complete: function() {
+								element.hide();
+							}
+						});
+					},
+					boxIn: function(element) {
+						element.css('opacity', 0).show().velocity('transition.flipYIn', {
+							delay: 200,
+							duration: 350,
+							complete: function() {
+								var container = element.closest('.jquery-alert'),
+									options = container.data('options');
+								options.callbacks.onOpen(element);
+							}
+						});
+					},
+					boxOut: function(element) {
+						element.velocity('transition.slideLeftOut', {
+							duration: 350,
+							complete: function() {
+								var container = element.closest('.jquery-alert'),
+									options = container.data('options');
+								element.hide();
+								options.callbacks.onClose(element);
+							}
+						});
+					}
+				}
+			});
+			//
+			$('.js-show-alert').on('click', function(e) {
+				e.preventDefault();
+				$.alert("Hi! this is an awesome alert, wait 3 seconds for the 'Try again' button to activate.", {
+					callbacks: {
+						createButton: function(button, text, name) {
+							switch (name) {
+								case 'close':
+									button.removeClass('btn-primary').addClass('btn-link');
+								break;
+								case 'retry':
+									button.addClass('disabled');
+								break;
+							}
+							button.text(text);
+						},
+						buttonRetry: function(button) {
+							if (! button.hasClass('disabled') ) {
+								$('.js-result').text("You clicked on '"+ button.text() +"'");
+								$.alert.api.close();
+							}
+						},
+						buttonClose: function(button) {
+							$('.js-result').text("You clicked on '"+ button.text() +"'");
+							$.alert.api.close();
+						},
+						onOpen: function(element) {
+							setTimeout(function() {
+								element.find('.alert-buttons .btn-primary').removeClass('disabled');
+							}, 3000);
+							console.log('onOpen');
+						},
+						onClose: function(element) {
+							console.log('onClose');
+						},
+						onKey: function(key) {
+							switch (key) {
+								case 'Enter':
+									$.alert.api.button('retry');
+								break;
+								case 'Escape':
+								case ' ':
+									$.alert.api.button('close');
+								break;
+							}
+						}
+					},
+					buttons: {
+						close: 'Cancel',
+						retry: 'Try again'
+					}
+				});
+			});
+			//
+			hljs.initHighlightingOnLoad();
+		});
+	</script>
+</body>
+</html>
